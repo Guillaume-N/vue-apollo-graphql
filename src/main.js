@@ -3,13 +3,14 @@ import App from "./App.vue";
 import router from "./router";
 import AuthPlugin from "./plugins/auth";
 
+import VueApollo from "vue-apollo";
+
 import ApolloClient from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
-import VueApollo from "vue-apollo";
-
 Vue.use(AuthPlugin);
+Vue.use(VueApollo);
 
 Vue.config.productionTip = false;
 
@@ -21,12 +22,14 @@ const getHeaders = () => {
   }
   return headers;
 };
+
 // Create an http link:
 const link = new HttpLink({
   uri: "https://learn.hasura.io/graphql",
   fetch,
   headers: getHeaders()
 });
+
 const client = new ApolloClient({
   link: link,
   cache: new InMemoryCache({
